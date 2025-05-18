@@ -1,0 +1,102 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0.42
+    command: --mysql-native-password=ON --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --binlog-expire-logs-seconds=259200
+    restart: always
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: "123456"
+      MYSQL_DATABASE: "cool"
+      MYSQL_USER: "cool"
+      MYSQL_PASSWORD: "123123"
+
+  redis:
+    image: redis
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - ./data/redis:/data
+
+  chatgpt-share-server:
+    image: xyhelper/chatgpt-share-server:latest
+    restart: always
+    ports:
+      - 9300:8001
+    environment:
+      TZ: Asia/Shanghai
+      CHATPROXY: "https://demo.xyhelper-gateway.com"
+      AUTHKEY: "xyhelper"
+      AUDIT_LIMIT_URL: "http://expander-sass:8301/public-api/auditLimit"
+      OAUTH_URL: "http://expander-sass:8301/public-api/openai/oauth"
+      APIAUTH: "GX9jWrV4geZ9JlBfrvn0a85y9g111bVZ"
+    volumes:
+      - ./config.yaml:/app/config.yaml
+      - ./data/chatgpt-share-server:/app/data
+      - ./gpt.js:/app/resource/public/list.js
+    labels:
+      - "com.centurylinklabs.watchtower.scope=xyhelper-chatgpt-share-server"
+
+  dddd-share-server:
+    image: lyy0709/dddd-share-server:dev
+    restart: always
+    ports:
+      - 9302:8001
+    environment:
+      TZ: Asia/Shanghai
+    #   PROXY_URL: "http://proxy:8080/proxy"
+      ORIGIN: "https://claude.fllai.cn"
+    #   CHATPROXY: "https://chatproxy.com"
+      AUDIT_LIMIT_URL: "http://expander-sass:8301/public-api/claudeLimit"
+      OAUTH_URL: "http://expander-sass:8301/public-api/claude/oauth"
+      APIAUTH: "GX9jWrV4geZ9JlBfrvn0a85y9g111bVZ"
+    volumes:
+      - ./config-claude.yaml:/app/config.yaml
+      - ./data/dddd-share-server:/app/data
+      - ./claude.js:/app/resource/public/list.js
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+
+  grok-share-server:
+    image: lyy0709/grok-share-server:dev
+    restart: always
+    ports:
+      - 9303:8001
+    environment:
+      TZ: Asia/Shanghai
+    #   PROXY_URL: "http://proxy:8080/proxy"
+      ORIGIN: "https://grok.fllai.cn"
+    #   CHATPROXY: "http://chatproxy:8080/proxy"
+      AUDIT_LIMIT_URL: "http://expander-sass:8301/public-api/grok/auditLimit"
+      OAUTH_URL: "http://expander-sass:8301/public-api/grok/oauth"
+      APIAUTH: "GX9jWrV4geZ9JlBfrvn0a85y9g111bVZ"
+    volumes:
+      - ./config-grok.yaml:/app/config.yaml
+      - ./data/grok-share-server:/app/data
+      - ./grok.js:/app/resource/public/list.js
+  
+  expander-sass:
+    image: seven222/expander-sass:latest
+    restart: always
+    ports:
+      - 9301:8301
+    depends_on:
+      - mysql
+    environment:
+      TZ: Asia/Shanghai
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/cool?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123456
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+      SPRING_REDIS_PASSWORD: ""
+      APIAUTH: "GX9jWrV4geZ9JlBfrvn0a85y9g111bVZ"
+    volumes:
+      - ./data/chatgpt-share-server-expander/data:/app/data
+      - /etc:/host/etc:ro
+      - /sys:/host/sys:ro
