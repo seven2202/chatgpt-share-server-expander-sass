@@ -874,7 +874,7 @@ function fetchAnnouncement () {
   
   window.fetchingAnnouncement = true;
   
-  fetch('/public-api/getLatestNotice', { method: 'GET' })
+  fetch('/client-api/getLatestNotice', { method: 'GET' })
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -1088,7 +1088,7 @@ function autoSelectClaude () {
     const loadIndex = setLoading('正在跳转到claude,请稍后...');
     const username = getCookie('username');
     fetch(
-      `/public-api/getClaudeLoginUrl?username=${encodeURIComponent(username)}`
+      `/client-api/getClaudeLoginUrl?username=${encodeURIComponent(username)}`
     )
       .then((element) => {
         if (!element.ok) {
@@ -1136,7 +1136,7 @@ function autoSelectCarAction () {
     if (!username) {
       customModal.msg('您还未登录，请先登录');
     }
-    fetch(`/public-api/getIdleCar?username=${encodeURIComponent(username)}`, {
+    fetch(`/client-api/getIdleCar?username=${encodeURIComponent(username)}`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${token}` },
     })
@@ -1232,7 +1232,7 @@ function fetchValidity () {
     console.log("Fetching validity data for user:", username);
     
     $.ajax({
-      url: `/public-api/validity-usage?username=${encodeURIComponent(username)}`,
+      url: `/client-api/validity-usage?username=${encodeURIComponent(username)}`,
       method: 'GET',
       success: function (response) {
         console.log("Received validity data:", response);
@@ -1943,7 +1943,7 @@ function getConfig () {
   window.fetchingConfig = true;
   console.log("Fetching site configuration...");
   
-  const url = `/public-api/site/config`;
+  const url = `/client-api/site/config`;
   fetch(url)
     .then((response) => response.json())
     .then(({ code, data }) => {
@@ -2261,7 +2261,7 @@ window.redeemCard = function() {
   let userId = getUserId();
 
   fetch(
-    `/public-api/code/redeem?key=${encodeURIComponent(
+    `/client-api/code/redeem?key=${encodeURIComponent(
       cardKey
     )}&userId=${encodeURIComponent(userId)}`,
     {
