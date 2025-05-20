@@ -27,10 +27,12 @@ DOMAIN2=""
 DOMAIN3=""
 
 # 询问是否需要配置 GPT 域名
-read -p "是否需要配置 GPT 域名？(y/n): " CONFIG_GPT
+echo -n "是否需要配置 GPT 域名？(y/n): "
+read CONFIG_GPT < /dev/tty
 if [[ $CONFIG_GPT == "y" ]]; then
     while true; do
-        read -p "请输入 GPT 二级域名（如：api.example.com）: " DOMAIN1
+        echo -n "请输入 GPT 二级域名（如：api.example.com）: "
+        read DOMAIN1 < /dev/tty
         if [[ $DOMAIN1 =~ $DOMAIN_REGEX ]]; then
             break
         else
@@ -40,10 +42,12 @@ if [[ $CONFIG_GPT == "y" ]]; then
 fi
 
 # 询问是否需要配置 Claude 域名
-read -p "是否需要配置 Claude 域名？(y/n): " CONFIG_CLAUDE
+echo -n "是否需要配置 Claude 域名？(y/n): "
+read CONFIG_CLAUDE < /dev/tty
 if [[ $CONFIG_CLAUDE == "y" ]]; then
     while true; do
-        read -p "请输入 Claude 二级域名（如：oauth.example.com）: " DOMAIN2
+        echo -n "请输入 Claude 二级域名（如：oauth.example.com）: "
+        read DOMAIN2 < /dev/tty
         if [[ $DOMAIN2 =~ $DOMAIN_REGEX ]]; then
             break
         else
@@ -53,10 +57,12 @@ if [[ $CONFIG_CLAUDE == "y" ]]; then
 fi
 
 # 询问是否需要配置 Grok 域名
-read -p "是否需要配置 Grok 域名？(y/n): " CONFIG_GROK
+echo -n "是否需要配置 Grok 域名？(y/n): "
+read CONFIG_GROK < /dev/tty
 if [[ $CONFIG_GROK == "y" ]]; then
     while true; do
-        read -p "请输入 Grok 二级域名（如：web.example.com）: " DOMAIN3
+        echo -n "请输入 Grok 二级域名（如：web.example.com）: "
+        read DOMAIN3 < /dev/tty
         if [[ $DOMAIN3 =~ $DOMAIN_REGEX ]]; then
             break
         else
