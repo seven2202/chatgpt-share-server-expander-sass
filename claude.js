@@ -10,7 +10,7 @@
     // 添加获取配置的函数
     async function fetchConfig() {
       try {
-        const response = await fetch(DOMAIN + '/public-api/site/config');
+        const response = await fetch(DOMAIN + '/client-api/site/config');
         const { code, data } = await response.json();
         if (code === 200) {
           enableSiteShop = data.enableSiteShop === true || data.enableSiteShop === 'true';
