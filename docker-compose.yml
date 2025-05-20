@@ -63,25 +63,25 @@ chatgpt-share-server-expander:
       - /etc:/host/etc:ro
       - /sys:/host/sys:ro
 
-  dddd-share-server:
-    image: lyy0709/dddd-share-server:dev
-    restart: always
-    ports:
-      - 9302:8001
-    environment:
-      TZ: Asia/Shanghai
-    #   PROXY_URL: "http://proxy:8080/proxy"
-      ORIGIN: "https://claude.fllai.cn"
-    #   CHATPROXY: "https://chatproxy.com"
-      AUDIT_LIMIT_URL: "http://chatgpt-share-server-expander:8888/client-api/claudeLimit"
-      OAUTH_URL: "http://chatgpt-share-server-expander:8888/client-api/claude/oauth"
-      APIAUTH: "GX9jWrV4geZ9JlBfrvn0a85y9g111bVZ"
-    volumes:
-      - ./config-claude.yaml:/app/config.yaml
-      - ./data/dddd-share-server:/app/data
-      - ./claude.js:/app/resource/public/list.js
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
+dddd-share-server:
+  image: lyy0709/dddd-share-server:dev
+  restart: always
+  ports:
+    - 9302:8001
+  environment:
+    TZ: Asia/Shanghai
+  #   PROXY_URL: "http://proxy:8080/proxy"
+    ORIGIN: "https://claude.fllai.cn"
+  #   CHATPROXY: "https://chatproxy.com"
+    AUDIT_LIMIT_URL: "http://chatgpt-share-server-expander:8888/client-api/claudeLimit"
+    OAUTH_URL: "http://chatgpt-share-server-expander:8888/client-api/claude/oauth"
+    APIAUTH: "GX9jWrV4geZ9JlBfrvn0a85y9g111bVZ"
+  volumes:
+    - ./config-claude.yaml:/app/config.yaml
+    - ./data/dddd-share-server:/app/data
+    - ./claude.js:/app/resource/public/list.js
+    - /proc:/host/proc:ro
+    - /sys:/host/sys:ro
 
   grok-share-server:
     image: lyy0709/grok-share-server:dev
