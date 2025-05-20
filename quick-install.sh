@@ -186,7 +186,7 @@ set -e
 
 ## 克隆仓库到本地
 echo "➤ 5. 开始拉取代码..."
-git clone -b deploy --depth=1 https://github.com/seven2202/chatgpt-share-server-expander-sass.git chatgpt-share-server-expander-sass
+git clone --depth=1 https://github.com/seven2202/chatgpt-share-server-expander-sass.git chatgpt-share-server-expander-sass
 
 ## 进入目录
 cd expander-sass
