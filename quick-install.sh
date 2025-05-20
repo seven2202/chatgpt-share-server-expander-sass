@@ -31,7 +31,7 @@ echo -n "是否需要配置 GPT 域名？(y/n): "
 read CONFIG_GPT < /dev/tty
 if [[ $CONFIG_GPT == "y" ]]; then
     while true; do
-        echo -n "请输入 GPT 二级域名（如：api.example.com）: "
+        echo -n "请输入 GPT 二级域名（如：gpt.xxx.com）: "
         read DOMAIN1 < /dev/tty
         if [[ $DOMAIN1 =~ $DOMAIN_REGEX ]]; then
             break
@@ -46,7 +46,7 @@ echo -n "是否需要配置 Claude 域名？(y/n): "
 read CONFIG_CLAUDE < /dev/tty
 if [[ $CONFIG_CLAUDE == "y" ]]; then
     while true; do
-        echo -n "请输入 Claude 二级域名（如：oauth.example.com）: "
+        echo -n "请输入 Claude 二级域名（如：kld.xxx.com）: "
         read DOMAIN2 < /dev/tty
         if [[ $DOMAIN2 =~ $DOMAIN_REGEX ]]; then
             break
@@ -61,7 +61,7 @@ echo -n "是否需要配置 Grok 域名？(y/n): "
 read CONFIG_GROK < /dev/tty
 if [[ $CONFIG_GROK == "y" ]]; then
     while true; do
-        echo -n "请输入 Grok 二级域名（如：web.example.com）: "
+        echo -n "请输入 Grok 二级域名（如：grok.xxx.com）: "
         read DOMAIN3 < /dev/tty
         if [[ $DOMAIN3 =~ $DOMAIN_REGEX ]]; then
             break
@@ -186,7 +186,7 @@ set -e
 
 ## 克隆仓库到本地
 echo "➤ 5. 开始拉取代码..."
-git clone -b deploy --depth=1 https://github.com/seven2202/chatgpt-share-server-expander-sass.git expander-sass
+git clone -b deploy --depth=1 https://github.com/seven2202/chatgpt-share-server-expander-sass.git chatgpt-share-server-expander-sass
 
 ## 进入目录
 cd expander-sass
