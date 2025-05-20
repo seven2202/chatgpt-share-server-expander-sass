@@ -32,8 +32,8 @@ services:
       TZ: Asia/Shanghai
       CHATPROXY: "https://demo.xyhelper-gateway.com"
       AUTHKEY: "xyhelper"
-      AUDIT_LIMIT_URL: "http://chatgpt-share-server-expander:8888/public-api/auditLimit"
-      OAUTH_URL: "http://chatgpt-share-server-expander:8888/public-api/openai/oauth"
+      AUDIT_LIMIT_URL: "http://chatgpt-share-server-expander:8888/client-api/auditLimit"
+      OAUTH_URL: "http://chatgpt-share-server-expander:8888/client-api/openai/oauth"
       APIAUTH: "GX9jWrV4geZ9JlBfrvn0a85y9g111bVZ"
     volumes:
       - ./config.yaml:/app/config.yaml
@@ -73,8 +73,8 @@ chatgpt-share-server-expander:
     #   PROXY_URL: "http://proxy:8080/proxy"
       ORIGIN: "https://claude.fllai.cn"
     #   CHATPROXY: "https://chatproxy.com"
-      AUDIT_LIMIT_URL: "http://chatgpt-share-server-expander:8888/public-api/claudeLimit"
-      OAUTH_URL: "http://chatgpt-share-server-expander:8888/public-api/claude/oauth"
+      AUDIT_LIMIT_URL: "http://chatgpt-share-server-expander:8888/client-api/claudeLimit"
+      OAUTH_URL: "http://chatgpt-share-server-expander:8888/client-api/claude/oauth"
       APIAUTH: "GX9jWrV4geZ9JlBfrvn0a85y9g111bVZ"
     volumes:
       - ./config-claude.yaml:/app/config.yaml
@@ -93,8 +93,8 @@ chatgpt-share-server-expander:
     #   PROXY_URL: "http://proxy:8080/proxy"
       ORIGIN: "https://grok.fllai.cn"
     #   CHATPROXY: "http://chatproxy:8080/proxy"
-      AUDIT_LIMIT_URL: "http://chatgpt-share-server-expander:8888/public-api/grok/auditLimit"
-      OAUTH_URL: "http://chatgpt-share-server-expander:8888/public-api/grok/oauth"
+      AUDIT_LIMIT_URL: "http://chatgpt-share-server-expander:8888/client-api/grok/auditLimit"
+      OAUTH_URL: "http://chatgpt-share-server-expander:8888/client-api/grok/oauth"
       APIAUTH: "GX9jWrV4geZ9JlBfrvn0a85y9g111bVZ"
     volumes:
       - ./config-grok.yaml:/app/config.yaml
