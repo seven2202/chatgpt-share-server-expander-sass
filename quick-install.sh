@@ -141,7 +141,7 @@ ${DOMAIN1:+${DOMAIN1} {
         reverse_proxy localhost:9301 {
             header_up Host {host}
             header_up X-Real-IP {remote_host}
-            header_up X-Forwarded-For {http.request.remote.for}
+            header_up X-Forwarded-For {http.request.remote.host}
             header_up REMOTE-HOST {remote_host}
             }
         }
@@ -149,17 +149,17 @@ ${DOMAIN1:+${DOMAIN1} {
         reverse_proxy localhost:9301 {
             header_up Host {host}
             header_up X-Real-IP {remote_host}
-            header_up X-Forwarded-For {http.request.remote.for}
+            header_up X-Forwarded-For {http.request.remote.host}
             header_up REMOTE-HOST {remote_host}
             }
         }
    handle /app/* {
         reverse_proxy localhost:9301
         }
+   redir /expander /expander/
    handle /expander/* {
         reverse_proxy localhost:9301
         }
-  
    redir /list /list/
    handle_path /list/* {
        rewrite *  /app/index.html
