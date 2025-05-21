@@ -26,18 +26,18 @@
 #### 代理1：tenant/123456
 #### 代理2：tenant2/123456
 ### 准备工作
-1、服务器：2h4g 起步，本文档以 ubutun24 全新环境为例
-2、准备一个域名：解析出3个二级域名。
-3、准备一个 gpt 网关
+- 服务器：2h4g 起步，本文档以 ubutun24 全新环境为例
+- 准备一个域名：解析出3个二级域名。
+- 准备一个 gpt 网关
 
 ### 开始一键部署
 ```
 curl -sSfL https://raw.githubusercontent.com/seven2202/chatgpt-share-server-expander-sass/refs/heads/main/quick-install.sh | bash
 ```
 输入3个二级域名，如：
-gpt.xxx.com
-kld.xxx.com
-grok.xxx.com
+- gpt.xxx.com
+- kld.xxx.com
+- grok.xxx.com
 
 接着提示输入gpt网关，输入带https协议的网关地址，如：https://gateway.xxx.com，如无请联系我。
 输入完成后，需要输入“y”。会拉取expander-sass镜像，完成部署。
