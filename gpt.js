@@ -831,8 +831,6 @@ const customModal = {
 
 function showAnnouncement (announcement) {
   const savedAnnouncement = localStorage.getItem('lastAnnouncement');
-  console.log("savedAnnouncement", savedAnnouncement);
-  console.log("announcement", announcement);
   if (announcement && savedAnnouncement !== announcement) {
     // 保存新的公告到 localStorage
     const isMobileVal = isMobile();
@@ -864,7 +862,6 @@ function showAnnouncement (announcement) {
 
 // 修改公告获取函数，添加延迟
 function fetchAnnouncement () {
-  console.log("计划获取公告中...");
   
   // 防止重复请求
   if (window.fetchingAnnouncement) {
@@ -1947,7 +1944,7 @@ function getConfig () {
   fetch(url)
     .then((response) => response.json())
     .then(({ code, data }) => {
-      if (code === 1) {
+      if (code === 200) {
         console.log("Received site configuration:", data);
         siteNotice = data.siteAnnouncement;
         FAQ = data.userGuideUrl;
