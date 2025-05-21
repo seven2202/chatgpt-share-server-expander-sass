@@ -70,7 +70,6 @@ services:
       - 9302:8001
     environment:
       TZ: Asia/Shanghai
-      ORIGIN: "https://claude.fllai.cn"
       AUDIT_LIMIT_URL: "http://chatgpt-share-server-expander:8888/client-api/claudeLimit"
       OAUTH_URL: "http://chatgpt-share-server-expander:8888/client-api/claude/oauth"
       APIAUTH: "GX9jWrV4geZ9JlBfrvn0a85y9g111bVZ"
@@ -88,7 +87,6 @@ services:
       - 9303:8001
     environment:
       TZ: Asia/Shanghai
-      ORIGIN: "https://grok.fllai.cn"
       AUDIT_LIMIT_URL: "http://chatgpt-share-server-expander:8888/client-api/grok/auditLimit"
       OAUTH_URL: "http://chatgpt-share-server-expander:8888/client-api/grok/oauth"
       APIAUTH: "GX9jWrV4geZ9JlBfrvn0a85y9g111bVZ"
