@@ -194,7 +194,7 @@ echo "➤ 5. 开始拉取代码..."
 git clone --depth=1 https://github.com/seven2202/chatgpt-share-server-expander-sass.git chatgpt-share-server-expander-sass
 
 ## 进入目录
-cd expander-sass
+cd chatgpt-share-server-expander-sass
 echo "➤ 6. 开始配置 docker-compose.yml 信息..."
 
 # 提示用户输入 CHATPROXY 和 OAUTH_URL
