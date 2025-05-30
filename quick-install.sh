@@ -171,7 +171,7 @@ ${DOMAIN1:+${DOMAIN1} {
        reverse_proxy localhost:9301
    }
 reverse_proxy localhost:9300
-}}
+}
 
 # Claude 配置
 ${DOMAIN2:+${DOMAIN2} {
