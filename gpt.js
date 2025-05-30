@@ -154,21 +154,21 @@ function addCustomIconsStyles () {
       margin-right: 8px;
     }
     
-    .custom-icon-home:before { content: '🏠'; }
-    .custom-icon-util:before { content: '🔄'; }
-    .custom-icon-user:before { content: '👤'; }
-    .custom-icon-diamond:before { content: '💎'; }
-    .custom-icon-notice:before { content: '📢'; }
-    .custom-icon-read:before { content: '📖'; }
-    .custom-icon-file:before { content: '📄'; }
-    .custom-icon-picture:before { content: '🖼️'; }
-    .custom-icon-mike:before { content: '🎤'; }
-    .custom-icon-senior:before { content: '🧠'; }
-    .custom-icon-website:before { content: '🌐'; }
-    .custom-icon-logout:before { content: '🚪'; }
-    .custom-icon-gift:before { content: '🎁'; }
-    .custom-icon-key:before { content: '🔑'; }
-    .custom-icon-right:before { content: '➡️'; }
+    .custom-icon-home:before { content: '馃彔'; }
+    .custom-icon-util:before { content: '馃攧'; }
+    .custom-icon-user:before { content: '馃懁'; }
+    .custom-icon-diamond:before { content: '馃拵'; }
+    .custom-icon-notice:before { content: '馃摙'; }
+    .custom-icon-read:before { content: '馃摉'; }
+    .custom-icon-file:before { content: '馃搫'; }
+    .custom-icon-picture:before { content: '馃柤锔?; }
+    .custom-icon-mike:before { content: '馃帳'; }
+    .custom-icon-senior:before { content: '馃'; }
+    .custom-icon-website:before { content: '馃寪'; }
+    .custom-icon-logout:before { content: '馃毆'; }
+    .custom-icon-gift:before { content: '馃巵'; }
+    .custom-icon-key:before { content: '馃攽'; }
+    .custom-icon-right:before { content: '鉃★笍'; }
     
     .custom-font-20 {
       font-size: 20px;
@@ -652,7 +652,7 @@ const customModal = {
     if (options.closeBtn !== false) {
       const closeBtn = document.createElement('button');
       closeBtn.className = 'custom-modal-close';
-      closeBtn.innerHTML = '&#215;'; // × symbol
+      closeBtn.innerHTML = '&#215;'; // 脳 symbol
       closeBtn.onclick = () => {
         this.close(modalId);
         if (options.end) options.end();
@@ -810,10 +810,10 @@ const customModal = {
 
   confirm: function (content, options = {}) {
     return this.open({
-      title: options.title || '确认',
+      title: options.title || '纭',
       content: content,
       type: 1,
-      btn: ['确定', '取消'],
+      btn: ['纭畾', '鍙栨秷'],
       yes: function (index) {
         customModal.close(index);
         if (options.yes) options.yes();
@@ -831,8 +831,10 @@ const customModal = {
 
 function showAnnouncement (announcement) {
   const savedAnnouncement = localStorage.getItem('lastAnnouncement');
+  console.log("savedAnnouncement", savedAnnouncement);
+  console.log("announcement", announcement);
   if (announcement && savedAnnouncement !== announcement) {
-    // 保存新的公告到 localStorage
+    // 淇濆瓨鏂扮殑鍏憡鍒?localStorage
     const isMobileVal = isMobile();
     width = isMobileVal
       ? $(window).width()
@@ -842,11 +844,11 @@ function showAnnouncement (announcement) {
       : 600 || Math.min($(window).height(), 800);
     customModal.open({
       type: 1,
-      title: ['系统通知', 'font-size: 18px;'],
+      title: ['绯荤粺閫氱煡', 'font-size: 18px;'],
       shadeClose: true,
       shade: 0.2,
       maxmin: true,
-      btn: ['知道了'],
+      btn: ['鐭ラ亾浜?],
       btnAlign: 'right',
       scrollbar: false,
       offset: 'auto',
@@ -854,24 +856,25 @@ function showAnnouncement (announcement) {
       content: announcement,
       yes: function (index) {
         localStorage.setItem('lastAnnouncement', announcement);
-        customModal.close(index); // 关闭窗口
+        customModal.close(index); // 鍏抽棴绐楀彛
       }
     });
   }
 }
 
-// 修改公告获取函数，添加延迟
+// 淇敼鍏憡鑾峰彇鍑芥暟锛屾坊鍔犲欢杩?
 function fetchAnnouncement () {
+  console.log("璁″垝鑾峰彇鍏憡涓?..");
   
-  // 防止重复请求
+  // 闃叉閲嶅璇锋眰
   if (window.fetchingAnnouncement) {
-    console.log("已有公告请求进行中，跳过");
+    console.log("宸叉湁鍏憡璇锋眰杩涜涓紝璺宠繃");
     return;
   }
   
   window.fetchingAnnouncement = true;
   
-  fetch('/client-api/getLatestNotice', { method: 'GET' })
+  fetch('/api/notice/getLatestNotice', { method: 'GET' })
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -892,11 +895,11 @@ function fetchAnnouncement () {
     });
 }
 
-// 在页面完全加载后延迟获取公告
+// 鍦ㄩ〉闈㈠畬鍏ㄥ姞杞藉悗寤惰繜鑾峰彇鍏憡
 window.addEventListener('load', function() {
-  // 延迟3秒后获取公告，确保页面已完全加载并渲染
+  // 寤惰繜3绉掑悗鑾峰彇鍏憡锛岀‘淇濋〉闈㈠凡瀹屽叏鍔犺浇骞舵覆鏌?
   setTimeout(function() {
-    console.log("页面已完全加载，开始获取公告...");
+    console.log("椤甸潰宸插畬鍏ㄥ姞杞斤紝寮€濮嬭幏鍙栧叕鍛?..");
     fetchAnnouncement();
   }, 3000);
 });
@@ -949,7 +952,7 @@ function export2File () {
   const markdownElements = document.querySelectorAll('.markdown.prose');
       
   if (!markdownElements || markdownElements.length === 0) {
-    window.alert('未找到聊天记录, 无法导出文档, 请先选择一个聊天记录');
+    window.alert('鏈壘鍒拌亰澶╄褰? 鏃犳硶瀵煎嚭鏂囨。, 璇峰厛閫夋嫨涓€涓亰澶╄褰?);
     return;
   }
   
@@ -963,7 +966,7 @@ function export2File () {
   }
   
   // Get current title if available
-  let title = '聊天记录';
+  let title = '鑱婂ぉ璁板綍';
   const titleElement = document.querySelector('.bg-token-sidebar-surface-secondary');
   if (titleElement && titleElement.innerText) {
     title = titleElement.innerText;
@@ -987,7 +990,7 @@ function export2File () {
     });
   } catch (e) {
     console.error('Export error:', e);
-    window.alert('导出过程中出错，请稍后再试');
+    window.alert('瀵煎嚭杩囩▼涓嚭閿欙紝璇风◢鍚庡啀璇?);
   }
   
   // Remove spacers
@@ -1033,7 +1036,7 @@ function loadExportDependencies(callback) {
 
 function isLogin () {
   if (isVisitor == 'true' || !isVisitor) {
-    customModal.msg('您还未登录,暂时无法使用该功能');
+    customModal.msg('鎮ㄨ繕鏈櫥褰?鏆傛椂鏃犳硶浣跨敤璇ュ姛鑳?);
     return false;
   }
   return true;
@@ -1044,6 +1047,18 @@ function showMenu () {
     return false;
   }
   return true;
+}
+
+
+function banGptAccount (carid) {
+  console.log('绂佺敤璐﹀彿', carid);
+  fetch(`/api/session/updateGptStatus?carId=${carid}`, { method: 'GET' })
+    .then((response) => {
+      console.log('绂佺敤璐﹀彿缁撴灉', response);
+    })
+    .catch((error) => {
+      console.error('绂佺敤璐﹀彿澶辫触', error);
+    });
 }
 
 
@@ -1063,11 +1078,11 @@ function getUserId () {
 }
 
 function setSessionCookie (name, value) {
-  // 计算30天后的时间
+  // 璁＄畻30澶╁悗鐨勬椂闂?
   const expirationDate = new Date();
   expirationDate.setDate(expirationDate.getDate() + 30);
 
-  // 设置cookie，包含过期时间
+  // 璁剧疆cookie锛屽寘鍚繃鏈熸椂闂?
   document.cookie = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
 }
 function deleteCookie (name) {
@@ -1082,10 +1097,10 @@ function logout () {
 
 function autoSelectClaude () {
   if (isLogin()) {
-    const loadIndex = setLoading('正在跳转到claude,请稍后...');
+    const loadIndex = setLoading('姝ｅ湪璺宠浆鍒癱laude,璇风◢鍚?..');
     const username = getCookie('username');
     fetch(
-      `/client-api/getClaudeLoginUrl?username=${encodeURIComponent(username)}`
+      `/api/claude/getClaudeLoginUrl?username=${encodeURIComponent(username)}`
     )
       .then((element) => {
         if (!element.ok) {
@@ -1108,7 +1123,7 @@ function autoSelectClaude () {
             console.log(res.msg);
             customModal.msg(res.msg);
           } else {
-            customModal.msg('未能成功获取Claude登录地址,请稍后重试');
+            customModal.msg('鏈兘鎴愬姛鑾峰彇Claude鐧诲綍鍦板潃,璇风◢鍚庨噸璇?);
           }
         }
       })
@@ -1122,23 +1137,23 @@ function autoSelectClaude () {
 }
 function autoSelectCarAction () {
   if (isLogin()) {
-    const loadIndex = setLoading('正在为您自动选车,请稍后...');
+    const loadIndex = setLoading('姝ｅ湪涓烘偍鑷姩閫夎溅,璇风◢鍚?..');
 
     const token = localStorage.getItem('accessToken');
     if (!token) {
-      customModal.msg('您还未登录,请先登录');
+      customModal.msg('鎮ㄨ繕鏈櫥褰?璇峰厛鐧诲綍');
       goHome();
     }
     const username = getCookie('username');
     if (!username) {
-      customModal.msg('您还未登录，请先登录');
+      customModal.msg('鎮ㄨ繕鏈櫥褰曪紝璇峰厛鐧诲綍');
     }
-    fetch(`/client-api/getIdleCar?username=${encodeURIComponent(username)}`, {
+    fetch(`/api/session/getIdleCar?username=${encodeURIComponent(username)}`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((element) => {
-        console.log('选车结果', element);
+        console.log('閫夎溅缁撴灉', element);
         if (!element.ok) {
           throw new Error(`HTTP error! Status: ${element.status}`);
         }
@@ -1152,7 +1167,7 @@ function autoSelectCarAction () {
         if (idleCar) {
           const username = getCookie('username');
           if (!username || !nodeType) {
-            customModal.msg('自动选车异常,正在为您自动跳转到首页,请重新选择');
+            customModal.msg('鑷姩閫夎溅寮傚父,姝ｅ湪涓烘偍鑷姩璺宠浆鍒伴椤?璇烽噸鏂伴€夋嫨');
             goHome();
           }
           let loginData = {
@@ -1166,11 +1181,11 @@ function autoSelectCarAction () {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(loginData),
           }).then((element) => {
-            console.log('选车后结果', element);
+            console.log('閫夎溅鍚庣粨鏋?, element);
             if (element.redirected) {
               window.location.href = '/';
             } else {
-              customModal.msg('自动选车失败,请回到首页后手动选择');
+              customModal.msg('鑷姩閫夎溅澶辫触,璇峰洖鍒伴椤靛悗鎵嬪姩閫夋嫨');
             }
           });
         } else {
@@ -1179,7 +1194,7 @@ function autoSelectCarAction () {
       })
       .catch((element) => {
         console.error('Error:', element);
-        customModal.msg('自动选车失败,将回到首页');
+        customModal.msg('鑷姩閫夎溅澶辫触,灏嗗洖鍒伴椤?);
         goHome();
       })
       .finally(() => {
@@ -1209,7 +1224,6 @@ function fetchValidity () {
   // Prevent multiple simultaneous requests
   if (window.fetchingValidity) {
     console.log("Already fetching validity, skipping duplicate request");
-    return Promise.reject(new Error('Already fetching'));
   }
   
   window.fetchingValidity = true;
@@ -1217,9 +1231,9 @@ function fetchValidity () {
   return new Promise((resolve, reject) => {
     const username = getCookie('username');
     if (!username) {
-      validityText = '未登录';
-      usageText = '请先登录';
-      $('#menuValidity').text(`有效期:${validityText}`);
+      validityText = '鏈櫥褰?;
+      usageText = '璇峰厛鐧诲綍';
+      $('#menuValidity').text(`鏈夋晥鏈?${validityText}`);
       $('#menuUsage').text(usageText);
       window.fetchingValidity = false;
       reject(new Error('Not logged in'));
@@ -1229,24 +1243,24 @@ function fetchValidity () {
     console.log("Fetching validity data for user:", username);
     
     $.ajax({
-      url: `/client-api/validity-usage?username=${encodeURIComponent(username)}`,
+      url: `/api/user/validity-usage?username=${encodeURIComponent(username)}`,
       method: 'GET',
       success: function (response) {
         console.log("Received validity data:", response);
         validityText = response.validity
           ? `${response.validity}`
-          : '有效期未知';
-        usageText = response.usage ? `${response.usage}` : '不限制使用';
-        $('#menuValidity').text(`有效期:${validityText}`);
+          : '鏈夋晥鏈熸湭鐭?;
+        usageText = response.usage ? `${response.usage}` : '涓嶉檺鍒朵娇鐢?;
+        $('#menuValidity').text(`鏈夋晥鏈?${validityText}`);
         $('#menuUsage').text(usageText);
         window.fetchingValidity = false;
         resolve(validityText);
       },
       error: function (err) {
         console.error("Error fetching validity data:", err);
-        validityText = '无法获取有效期';
-        usageText = '无法获取使用量';
-        $('#menuValidity').text(`有效期:${validityText}`);
+        validityText = '鏃犳硶鑾峰彇鏈夋晥鏈?;
+        usageText = '鏃犳硶鑾峰彇浣跨敤閲?;
+        $('#menuValidity').text(`鏈夋晥鏈?${validityText}`);
         $('#menuUsage').text(usageText);
         window.fetchingValidity = false;
         reject(err);
@@ -1254,7 +1268,7 @@ function fetchValidity () {
     });
   });
 }
-// 创建一个函数来根据当前主题更新样式
+// 鍒涘缓涓€涓嚱鏁版潵鏍规嵁褰撳墠涓婚鏇存柊鏍峰紡
 function updateThemeStyles () {
   const isDarkMode = document.documentElement.classList.contains('dark');
 
@@ -1316,7 +1330,7 @@ function createMenu() {
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
               <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
-            <span>卡密兑换</span>
+            <span>鍗″瘑鍏戞崲</span>
           </a>
         </div>` : ''}
       </div>
@@ -1328,27 +1342,27 @@ function createMenu() {
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
             <polyline points="9 22 9 12 15 12 15 22"></polyline>
           </svg>
-          首页
+          棣栭〉
         </a>
         <a class="menu-item-dark" onclick="autoSelectCarAction()">
           <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"></circle>
             <path d="M16.2 7.8l-2 6.3-6.4 2.1 2-6.3z"></path>
           </svg>
-          选车
+          閫夎溅
         </a>
         <a class="menu-item-dark" onclick="showGoodsDialog()">
           <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
           </svg>
-          续费
+          缁垂
         </a>
         <a class="menu-item-dark" onclick="showoNoticeDialog()">
           <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
             <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
           </svg>
-          公告
+          鍏憡
         </a>
         <a class="menu-item-dark" onclick="export2File()">
           <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1357,7 +1371,7 @@ function createMenu() {
             <line x1="12" y1="18" x2="12" y2="12"></line>
             <line x1="9" y1="15" x2="15" y2="15"></line>
           </svg>
-          导出
+          瀵煎嚭
         </a>
         <a class="menu-item-dark" onclick="showFAQDialog()">
           <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1365,7 +1379,7 @@ function createMenu() {
             <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
             <line x1="12" y1="17" x2="12.01" y2="17"></line>
           </svg>
-          说明
+          璇存槑
         </a>
         <a class="menu-item-dark" onclick="autoSelectClaude()">
           <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1380,7 +1394,7 @@ function createMenu() {
             <polyline points="16 17 21 12 16 7"></polyline>
             <line x1="21" y1="12" x2="9" y2="12"></line>
           </svg>
-          退出
+          閫€鍑?
         </a>
       </div>
     </div>`;
@@ -1393,27 +1407,27 @@ function createMenu() {
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
             <polyline points="9 22 9 12 15 12 15 22"></polyline>
           </svg>
-          首页
+          棣栭〉
         </a>
         <a class="menu-item-dark" onclick="autoSelectCarAction()">
           <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"></circle>
             <path d="M16.2 7.8l-2 6.3-6.4 2.1 2-6.3z"></path>
           </svg>
-          选车
+          閫夎溅
         </a>
         <a class="menu-item-dark" onclick="showGoodsDialog()">
           <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
           </svg>
-          续费
+          缁垂
         </a>
         <a class="menu-item-dark" onclick="showoNoticeDialog()">
           <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
             <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
           </svg>
-          公告
+          鍏憡
         </a>
         <a class="menu-item-dark" onclick="export2File()">
           <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1422,7 +1436,7 @@ function createMenu() {
             <line x1="12" y1="18" x2="12" y2="12"></line>
             <line x1="9" y1="15" x2="15" y2="15"></line>
           </svg>
-          导出
+          瀵煎嚭
         </a>
         <a class="menu-item-dark" onclick="showFAQDialog()">
           <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1430,7 +1444,7 @@ function createMenu() {
             <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
             <line x1="12" y1="17" x2="12.01" y2="17"></line>
           </svg>
-          说明
+          璇存槑
         </a>
         <a class="menu-item-dark" onclick="autoSelectClaude()">
           <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1445,7 +1459,7 @@ function createMenu() {
             <polyline points="10 17 15 12 10 7"></polyline>
             <line x1="15" y1="12" x2="3" y2="12"></line>
           </svg>
-          登录
+          鐧诲綍
         </a>
       </div>
     </div>`;
@@ -1458,15 +1472,15 @@ function createMenu() {
 
 function showExpireTip () {
   if (validityText) {
-    // 将有效期转换为 Date 对象
+    // 灏嗘湁鏁堟湡杞崲涓?Date 瀵硅薄
     let validityDate = new Date(validityText);
     let currentDate = new Date();
 
-    // 计算剩余天数
+    // 璁＄畻鍓╀綑澶╂暟
     let timeDiff = validityDate - currentDate;
-    let daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)); // 将毫秒转换为天数
+    let daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)); // 灏嗘绉掕浆鎹负澶╂暟
 
-    // 如果剩余天数小于等于3天，显示提示框
+    // 濡傛灉鍓╀綑澶╂暟灏忎簬绛変簬3澶╋紝鏄剧ず鎻愮ず妗?
     if (daysLeft <= 3 && daysLeft > 0) {
       customModal.open({
         type: 1,
@@ -1475,12 +1489,12 @@ function showExpireTip () {
         area: ['300px', 'auto'],
         shade: 0.8,
         id: 'LAY_layuipro',
-        btn: ['立即续费', '稍后处理'],
+        btn: ['绔嬪嵆缁垂', '绋嶅悗澶勭悊'],
         btnAlign: 'right',
         moveType: 1,
         content: `<div style="padding: 50px; line-height: 22px; background-color: #fff; color: #333; font-weight: 300;">
                             <i class="custom-icon custom-icon-notice" style="font-size: 30px; color: #FF9800;"></i>
-                            <p style="margin-top:20px;">尊敬的用户，您的会员有效期将在 ${daysLeft} 天后过期</p>
+                            <p style="margin-top:20px;">灏婃暚鐨勭敤鎴凤紝鎮ㄧ殑浼氬憳鏈夋晥鏈熷皢鍦?${daysLeft} 澶╁悗杩囨湡</p>
                          </div>`,
         yes: function () {
           showGoodsDialog();
@@ -1494,12 +1508,12 @@ function showExpireTip () {
         area: ['300px', 'auto'],
         shade: 0.8,
         id: 'LAY_layuipro',
-        btn: ['立即续费', '稍后处理'],
+        btn: ['绔嬪嵆缁垂', '绋嶅悗澶勭悊'],
         btnAlign: 'right',
         moveType: 1,
         content: `<div style="padding: 50px; line-height: 22px; background-color: #fff; color: #333; font-weight: 300;">
                             <i class="custom-icon custom-icon-notice" style="font-size: 30px; color: #FF9800;"></i>
-                            <p style="margin-top:20px;">尊敬的用户，您的会员已到期！</p>
+                            <p style="margin-top:20px;">灏婃暚鐨勭敤鎴凤紝鎮ㄧ殑浼氬憳宸插埌鏈燂紒</p>
                          </div>`,
         yes: function () {
           showGoodsDialog();
@@ -1507,61 +1521,10 @@ function showExpireTip () {
       });
     }
   } else {
-    console.log(validityText); // 如果有效期未知，则输出提示
+    console.log(validityText); // 濡傛灉鏈夋晥鏈熸湭鐭ワ紝鍒欒緭鍑烘彁绀?
   }
 }
-// 覆盖用户代理(UA)和浏览器特性，模拟桌面浏览器环境
-(function() {
-      // 定义桌面Chrome浏览器的UA字符串
-      const desktopChromeUA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36';
-      
-      // 覆盖userAgent的getter方法
-      Object.defineProperty(Navigator.prototype, 'userAgent', {
-          get: function() {
-              return desktopChromeUA;
-          }
-      });
-      
-      // 同样覆盖platform，使其一致
-      Object.defineProperty(Navigator.prototype, 'platform', {
-          get: function() {
-              return 'Win32';
-          }
-      });
-      
-      // 覆盖appVersion
-      Object.defineProperty(Navigator.prototype, 'appVersion', {
-          get: function() {
-              return '5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36';
-          }
-      });
-  
-      // 覆盖vendor
-      Object.defineProperty(Navigator.prototype, 'vendor', {
-          get: function() {
-              return 'Google Inc.';
-          }
-      });
-      
-      // 覆盖maxTouchPoints，桌面通常为0
-      Object.defineProperty(Navigator.prototype, 'maxTouchPoints', {
-          get: function() {
-              return 0;
-          }
-      });
-  
-      // 覆盖移动设备检测函数
-      window.isMobile = function() {
-          return false;
-      };
-      
-      // 覆盖触屏设备检测函数
-      window.isTouchDevice = function() {
-          return false;
-      };
-      
-      console.log('已启用桌面浏览器UA模拟');
-  })();
+
 (function () {
   console.log('list-version 20250427');
 
@@ -1647,14 +1610,14 @@ function initCustomUI () {
     window.showProfile = (element) => {
       if (isLogin()) {
         closeChatDialog(element);
-        showIframeDialog('个人中心', '/list/#/external-profile', 600, 1000, 2);
+        showIframeDialog('涓汉涓績', '/list/#/external-profile', 600, 1000, 2);
       }
     };
   
     window.showFAQDialog = (element) => {
       closeChatDialog(element);
       showIframeDialog(
-        '使用说明',
+        '浣跨敤璇存槑',
         FAQ,
         600,
         1000,
@@ -1667,7 +1630,7 @@ function initCustomUI () {
         closeChatDialog(element);
         if (enableSiteShop === 'true') {
           showIframeDialog(
-            '站内购买',
+            '绔欏唴璐拱',
             originUrl + '/list/#/shop',
             800,
             1000,
@@ -1675,9 +1638,9 @@ function initCustomUI () {
           );
         } else {
           if (fkAddress) {
-            showIframeDialog('卡密购买', fkAddress, 700, 1200, 2);
+            showIframeDialog('鍗″瘑璐拱', fkAddress, 700, 1200, 2);
           } else {
-            customModal.msg('管理员还未配置卡密地址');
+            customModal.msg('绠＄悊鍛樿繕鏈厤缃崱瀵嗗湴鍧€');
           }
         }
       }
@@ -1686,7 +1649,7 @@ function initCustomUI () {
     window.showoNoticeDialog = (element) => {
       closeChatDialog(element);
       showIframeDialog(
-        '站内公告',
+        '绔欏唴鍏憡',
         siteNotice,
         600,
         1000,
@@ -1736,7 +1699,7 @@ function initRegAndLoginButton() {
 
   // Find the target divs in the navigation
   var $div = $(
-    '.draggable.relative.h-full.w-full.flex-1.items-start nav>div:nth-child(3)'
+    '.flex.h-full.min-h-0 nav>div:nth-child(7)'
   );
   if ($div.length === 0) {
     // Target element doesn't exist yet, retry after a short delay
@@ -1770,7 +1733,7 @@ function initRegAndLoginButton() {
             <polyline points="10 17 15 12 10 7"></polyline>
             <line x1="15" y1="12" x2="3" y2="12"></line>
           </svg>
-          <span>登录</span>
+          <span>鐧诲綍</span>
         </button>
         <button onclick="register();" class="custom-btn register-btn">
           <svg class="register-btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1779,7 +1742,7 @@ function initRegAndLoginButton() {
             <line x1="20" y1="8" x2="20" y2="14"></line>
             <line x1="23" y1="11" x2="17" y2="11"></line>
           </svg>
-          <span>注册</span>
+          <span>娉ㄥ唽</span>
         </button>
       </div>
     </div>`;
@@ -1807,8 +1770,8 @@ function initRegAndLoginButton() {
   } else {
     // Logged in - Show with OpenAI style flat layout
     // Get validity period display text and usage info
-    const validityDisplayText = validityText ? validityText.split(' ')[0] : '数据加载中';
-    const usageDisplayText = usageText || '数据加载中';
+    const validityDisplayText = validityText ? validityText.split(' ')[0] : '鏁版嵁鍔犺浇涓?;
+    const usageDisplayText = usageText || '鏁版嵁鍔犺浇涓?;
     
     let html = `<div class="flex flex-col mb-6 visitor-buttons-initialized openai-user-info">
       <div class="openai-user-stats">
@@ -1832,12 +1795,12 @@ function initRegAndLoginButton() {
         </div>
         ` : ''}
       </div>
-      <button onclick="showGoodsDialog();" class="openai-recharge-btn" aria-label="续费/充值">
+      <button onclick="showGoodsDialog();" class="openai-recharge-btn" aria-label="缁垂/鍏呭€?>
         <svg class="openai-btn-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="5" width="20" height="14" rx="2"></rect>
           <line x1="2" y1="10" x2="22" y2="10"></line>
         </svg>
-        续费/充值
+        缁垂/鍏呭€?
       </button>
     </div>`;
     
@@ -1863,7 +1826,7 @@ function initRegAndLoginButton() {
       
       // Update validity and usage when it changes
       fetchValidity().then(() => {
-        const validityShortText = validityText ? validityText : '未知';
+        const validityShortText = validityText ? validityText : '鏈煡';
         const bottomValidityDisplay = document.getElementById('bottom-validity-display');
         const bottomUsageDisplay = document.getElementById('bottom-usage-display');
         
@@ -1872,10 +1835,10 @@ function initRegAndLoginButton() {
         }
         console.log('enableShowRemaining:',enableShowRemaining)
         if (bottomUsageDisplay && enableShowRemaining === 'true') {
-          bottomUsageDisplay.textContent = usageText || '10/10(每3小时)';
+          bottomUsageDisplay.textContent = usageText || '10/10(姣?灏忔椂)';
         }
       }).catch(err => {
-        console.error('获取有效期失败:', err);
+        console.error('鑾峰彇鏈夋晥鏈熷け璐?', err);
       });
     }
   }
@@ -1915,7 +1878,7 @@ function setupEventListeners() {
   window.regLoginButtonInterval = setInterval(() => {
     const visitorButtonsExist = document.querySelector('.visitor-buttons-initialized');
     if (!visitorButtonsExist && (isVisitor === 'true' || !isVisitor)) {
-      console.log("恢复左下角按钮...");
+      console.log("鎭㈠宸︿笅瑙掓寜閽?..");
       initRegAndLoginButton();
     }
   }, 1000);
@@ -1940,11 +1903,11 @@ function getConfig () {
   window.fetchingConfig = true;
   console.log("Fetching site configuration...");
   
-  const url = `/client-api/site/config`;
+  const url = `/api/sys/site-data`;
   fetch(url)
     .then((response) => response.json())
     .then(({ code, data }) => {
-      if (code === 200) {
+      if (code === 1) {
         console.log("Received site configuration:", data);
         siteNotice = data.siteAnnouncement;
         FAQ = data.userGuideUrl;
@@ -1958,12 +1921,12 @@ function getConfig () {
         enableNoSelectCar = data.enableNoSelectCar;
         closeCardExchange = data.closeCardExchange;
 
-        // 开启备用镜像时，删除cookie
+        // 寮€鍚鐢ㄩ暅鍍忔椂锛屽垹闄ookie
         if (enableBackNode == 'true') {
           deleteCookie('gfsessionid');
         }
 
-        // 未开启免登的话，修改游客模式为false
+        // 鏈紑鍚厤鐧荤殑璇濓紝淇敼娓稿妯″紡涓篺alse
         if (enableNoLogin == 'false') {
           setSessionCookie('visitor', false);
         }
@@ -1996,14 +1959,14 @@ function getConfig () {
               createMenu();
             })
             .catch((err) => {
-              console.error('获取有效期失败:', err);
+              console.error('鑾峰彇鏈夋晥鏈熷け璐?', err);
               // Create menu even if validity fetch fails
               createMenu();
             });
         }
         
         // Always re-initialize login/register/recharge buttons based on current login status
-        console.log("配置加载后初始化底部按钮，当前游客状态:", isVisitor);
+        console.log("閰嶇疆鍔犺浇鍚庡垵濮嬪寲搴曢儴鎸夐挳锛屽綋鍓嶆父瀹㈢姸鎬?", isVisitor);
         
         // Force re-initialization of the left corner buttons by removing initialized class
         const existingButtons = document.querySelector('.visitor-buttons-initialized');
@@ -2032,7 +1995,7 @@ function getConfig () {
       
       // Ensure login/register buttons are initialized even if config fails
       if (isVisitor == 'true' || !isVisitor) {
-        console.log("配置加载失败，仍然初始化底部按钮...");
+        console.log("閰嶇疆鍔犺浇澶辫触锛屼粛鐒跺垵濮嬪寲搴曢儴鎸夐挳...");
         initRegAndLoginButton();
       }
     });
@@ -2056,7 +2019,7 @@ function setupRegLoginButtonInterval() {
     window.regLoginButtonInterval = setInterval(() => {
       const visitorButtonsExist = document.querySelector('.visitor-buttons-initialized');
       if (!visitorButtonsExist) {
-        console.log("检测到底部按钮消失，重新初始化...");
+        console.log("妫€娴嬪埌搴曢儴鎸夐挳娑堝け锛岄噸鏂板垵濮嬪寲...");
         initRegAndLoginButton();
       }
     }, 1000);
@@ -2186,24 +2149,24 @@ window.showIframeDialog = showIframeDialog;
 window.showRedeemDialog = function() {
   // Only show dialog if closeCardExchangeis not 'false'
   if (closeCardExchange=== 'true') {
-    customModal.msg('卡密兑换功能已禁用');
+    customModal.msg('鍗″瘑鍏戞崲鍔熻兘宸茬鐢?);
     return;
   }
   
   if (isLogin()) {
     customModal.open({
       type: 1,
-      title: '卡密兑换',
+      title: '鍗″瘑鍏戞崲',
       closeBtn: true,
       area: ['350px', 'auto'],
       shadeClose: true,
       content: `
         <div style="padding: 20px;">
           <div style="margin-bottom: 15px;">
-            <input type="text" id="cardKey" placeholder="请输入卡密" class="custom-input" style="width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; background-color: ${document.documentElement.classList.contains('dark') ? '#444' : '#fff'}; color: ${document.documentElement.classList.contains('dark') ? '#fff' : '#333'};">
+            <input type="text" id="cardKey" placeholder="璇疯緭鍏ュ崱瀵? class="custom-input" style="width: 100%; padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; background-color: ${document.documentElement.classList.contains('dark') ? '#444' : '#fff'}; color: ${document.documentElement.classList.contains('dark') ? '#fff' : '#333'};">
           </div>
           <div style="text-align: center;">
-            <button id="redeemSubmit" class="custom-btn" style="background: #f90; border-radius: 4px; color: white; cursor: pointer; transition: all 0.2s; font-weight: 500;">确定兑换</button>
+            <button id="redeemSubmit" class="custom-btn" style="background: #f90; border-radius: 4px; color: white; cursor: pointer; transition: all 0.2s; font-weight: 500;">纭畾鍏戞崲</button>
           </div>
         </div>
       `,
@@ -2242,23 +2205,23 @@ window.showRedeemDialog = function() {
 window.redeemCard = function() {
   const cardKey = $('#cardKey').val().trim();
   if (!cardKey) {
-    customModal.msg('请输入卡密');
+    customModal.msg('璇疯緭鍏ュ崱瀵?);
     return;
   }
 
-  const loadIndex = setLoading('正在兑换,请稍后...');
+  const loadIndex = setLoading('姝ｅ湪鍏戞崲,璇风◢鍚?..');
   const token = localStorage.getItem('accessToken');
 
   if (!token) {
     customModal.close(loadIndex);
-    customModal.msg('认证已过期，请重新登录');
+    customModal.msg('璁よ瘉宸茶繃鏈燂紝璇烽噸鏂扮櫥褰?);
     return;
   }
   
   let userId = getUserId();
 
   fetch(
-    `/client-api/code/redeem?key=${encodeURIComponent(
+    `/api/codes/redeem?key=${encodeURIComponent(
       cardKey
     )}&userId=${encodeURIComponent(userId)}`,
     {
@@ -2277,22 +2240,22 @@ window.redeemCard = function() {
     .then((data) => {
       customModal.close(loadIndex);
       if (data && data.code === 1) {
-        // 根据实际返回码调整
-        customModal.msg('兑换成功！');
-        // 重新获取用户有效期和使用量
+        // 鏍规嵁瀹為檯杩斿洖鐮佽皟鏁?
+        customModal.msg('鍏戞崲鎴愬姛锛?);
+        // 閲嶆柊鑾峰彇鐢ㄦ埛鏈夋晥鏈熷拰浣跨敤閲?
         fetchValidity();
-        // 关闭兑换弹窗
+        // 鍏抽棴鍏戞崲寮圭獥
         customModal.closeAll();
       } else {
-        customModal.msg(data.msg || '兑换失败，请检查卡密是否正确');
+        customModal.msg(data.msg || '鍏戞崲澶辫触锛岃妫€鏌ュ崱瀵嗘槸鍚︽纭?);
       }
     })
     .catch((error) => {
       customModal.close(loadIndex);
       if (error.message.includes('401')) {
-        customModal.msg('认证已过期，请重新登录');
+        customModal.msg('璁よ瘉宸茶繃鏈燂紝璇烽噸鏂扮櫥褰?);
       } else {
-        customModal.msg('兑换失败，请稍后重试');
+        customModal.msg('鍏戞崲澶辫触锛岃绋嶅悗閲嶈瘯');
       }
       console.error('Error:', error);
     });
