@@ -166,7 +166,7 @@ ${DOMAIN1:+${DOMAIN1} {
         reverse_proxy localhost:9301
         }
    redir /list /list/
-   handle_path /list/* {
+   handle /list/* {
        rewrite *  /app/index.html
        reverse_proxy localhost:9301
    }
