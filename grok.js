@@ -1,212 +1,129 @@
 (function() {
-    const CONFIG = {
-      shareUrl: 'https://gpt域名', // 请替换为您的实际 shareUrl
-    };
-    const DOMAIN = CONFIG.shareUrl;
-    let menu;
-    let menuButton;
-    let enableSiteShop = false;
-  
-    // 添加获取配置的函数
-    async function fetchConfig() {
+  // 动态获取shareUrl的函数
+  function getShareUrl() {
+    // 方法1：从URL参数获取
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramUrl = urlParams.get('shareUrl');
+    if (paramUrl) {
+      return paramUrl;
+    }
+    
+    // 方法2：从document.referrer获取
+    if (document.referrer) {
       try {
-        const response = await fetch(DOMAIN + '/client-api/site/config');
-        const { code, data } = await response.json();
-        if (code === 200) {
-          enableSiteShop = data.enableSiteShop === true || data.enableSiteShop === 'true';
-          console.log('Shop enabled:', enableSiteShop);
-        }
-      } catch (error) {
-        console.error('获取配置失败:', error);
-        enableSiteShop = false; // 出错时默认禁用
+        const referrerUrl = new URL(document.referrer);
+        return referrerUrl.origin;
+      } catch (e) {
+        console.warn('无法解析referrer URL:', e);
       }
     }
+    
+    // 默认值为空
+    return '';
+  }
+
+  const DOMAIN = getShareUrl();
+  console.log('当前使用的域名:', DOMAIN);
   
-    // 在创建菜单之前获取最新配置
-    async function initMenu() {
-      await fetchConfig();
-      await createMenu();
+  let homeButton;
+  let tooltip;
+
+  // 创建首页图标
+  function createHomeIcon() {
+    return '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9,22 9,12 15,12 15,22"></polyline></svg>';
+  }
+
+  // 创建回首页按钮
+  function createHomeButton() {
+    if (document.getElementById('homeButton')) return;
+
+    // 创建提示文字
+    tooltip = document.createElement('div');
+    tooltip.id = 'homeTooltip';
+    tooltip.textContent = '回到首页';
+    Object.assign(tooltip.style, {
+      position: "fixed",
+      background: "rgba(0, 0, 0, 0.8)",
+      color: "white",
+      padding: "6px 10px",
+      borderRadius: "6px",
+      fontSize: "12px",
+      whiteSpace: "nowrap",
+      zIndex: "1001",
+      opacity: "0",
+      transition: "opacity 0.3s ease",
+      pointerEvents: "none",
+      fontFamily: "Arial, sans-serif"
+    });
+
+    homeButton = document.createElement('div');
+    homeButton.id = 'homeButton';
+    Object.assign(homeButton.style, {
+      position: "fixed",
+      right: "20px",
+      top: "10%",
+      width: "50px",
+      height: "50px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+      borderRadius: "50%",
+      cursor: "pointer",
+      zIndex: "1000",
+      boxShadow: "0 4px 15px rgba(0,0,0,0.2)",
+      transition: "all 0.3s ease",
+      border: "2px solid rgba(255,255,255,0.3)"
+    });
+    
+    homeButton.innerHTML = `<div style="color: white;">${createHomeIcon()}</div>`;
+    
+    // 添加悬停效果
+    homeButton.addEventListener('mouseenter', (e) => {
+      homeButton.style.transform = 'scale(1.1)';
+      homeButton.style.boxShadow = '0 6px 20px rgba(0,0,0,0.3)';
+      
+      // 显示提示文字
+      const rect = homeButton.getBoundingClientRect();
+      tooltip.style.right = (window.innerWidth - rect.left + 10) + 'px';
+      tooltip.style.top = (rect.top + rect.height / 2 - 12) + 'px'; // 12px是大约的tooltip高度的一半
+      tooltip.style.opacity = '1';
+    });
+    
+    homeButton.addEventListener('mouseleave', () => {
+      homeButton.style.transform = 'scale(1)';
+      homeButton.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+      
+      // 隐藏提示文字
+      tooltip.style.opacity = '0';
+    });
+
+    // 点击事件 - 回到首页
+    homeButton.addEventListener('click', () => {
+      const homeUrl = DOMAIN ? DOMAIN + "/list/#/home" : "/list/#/home";
+      window.location.href = homeUrl;
+    });
+
+    // 添加到页面
+    document.body.appendChild(tooltip);
+    document.body.appendChild(homeButton);
+  }
+
+  // 确保按钮始终存在
+  function ensureHomeButton() {
+    if (!document.getElementById('homeButton') || !document.getElementById('homeTooltip')) {
+      createHomeButton();
     }
+    requestAnimationFrame(ensureHomeButton);
+  }
+
+  // 启动
+  console.log('回首页按钮脚本加载完成');
   
-    function createMenuIcon() {
-      const htmlClass = document.documentElement.className;
-      return htmlClass === 'dark' 
-        ? '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>'
-        : '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
-    }
-  
-    // 创建菜单
-    async function createMenu() {
-      if (document.getElementById('menuButton')) return;
-  
-      // 菜单项配置
-      const menuItems = [
-        {
-          text: "回到首页",
-          action: () => { window.location.href = DOMAIN + "/list/#/home"; }
-        },
-      ];
-  
-      // 根据enableSiteShop状态添加套餐商店选项
-      if (enableSiteShop) {
-        menuItems.push({
-          text: "套餐商店",
-          action: () => {
-            createShopModal();
-          }
-        });
-      }
-  
-      // 创建菜单按钮
-      menuButton = document.createElement('div');
-      menuButton.id = 'menuButton';
-      Object.assign(menuButton.style, {
-        position: "fixed",
-        right: "20px",
-        top: "10%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: "transparent",
-        cursor: "pointer",
-        zIndex: "1000"
-      });
-      menuButton.innerHTML = createMenuIcon();
-  
-      // 创建菜单容器
-      menu = document.createElement('div');
-      menu.id = 'menu';
-      Object.assign(menu.style, {
-        position: "fixed",
-        right: "20px",
-        top: "15%",
-        background: "white",
-        borderRadius: "10px",
-        padding: "10px 0",
-        boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
-        display: "none",
-        zIndex: "999"
-      });
-  
-      // 添加菜单项
-      menuItems.forEach(item => {
-        const menuItem = document.createElement('div');
-        menuItem.className = 'menu-item';
-        Object.assign(menuItem.style, {
-          padding: "10px 20px",
-          display: "flex",
-          alignItems: "center",
-          cursor: "pointer",
-          whiteSpace: "nowrap"
-        });
-        
-        menuItem.innerHTML = `<span style="color: #111;">${item.text}</span>`;
-        menuItem.addEventListener('click', item.action);
-        
-        menu.appendChild(menuItem);
-      });
-  
-      // 添加到页面
-      document.body.appendChild(menuButton);
-      document.body.appendChild(menu);
-  
-      // 添加事件监听
-      menuButton.addEventListener('click', (e) => {
-        e.stopPropagation();
-        menu.style.display = menu.style.display === "none" ? "block" : "none";
-      });
-  
-      document.addEventListener('click', (e) => {
-        if (!menu.contains(e.target) && !menuButton.contains(e.target)) {
-          menu.style.display = "none";
-        }
-      });
-    }
-  
-    // 创建商店模态框
-    function createShopModal() {
-      const modal = document.createElement('div');
-      Object.assign(modal.style, {
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '80%',
-        height: '80%',
-        backgroundColor: 'white',
-        borderRadius: '10px',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
-        zIndex: '2000',
-        display: 'flex',
-        flexDirection: 'column'
-      });
-  
-      // 创建标题栏
-      const titleBar = document.createElement('div');
-      Object.assign(titleBar.style, {
-        padding: '10px',
-        borderBottom: '1px solid #eee',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      });
-      titleBar.innerHTML = '<span>套餐商店</span>';
-  
-      // 创建关闭按钮
-      const closeButton = document.createElement('button');
-      Object.assign(closeButton.style, {
-        border: 'none',
-        background: 'none',
-        cursor: 'pointer',
-        fontSize: '20px'
-      });
-      closeButton.innerHTML = '×';
-      closeButton.onclick = () => {
-        modal.remove();
-        overlay.remove();
-      };
-      titleBar.appendChild(closeButton);
-  
-      // 创建iframe
-      const iframe = document.createElement('iframe');
-      Object.assign(iframe.style, {
-        width: '100%',
-        height: '100%',
-        border: 'none'
-      });
-      iframe.src = DOMAIN + "/list/#/shop";
-  
-      // 创建遮罩层
-      const overlay = document.createElement('div');
-      Object.assign(overlay.style, {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(0,0,0,0.5)',
-        zIndex: '1999'
-      });
-      overlay.onclick = () => {
-        modal.remove();
-        overlay.remove();
-      };
-  
-      // 组装模态框
-      modal.appendChild(titleBar);
-      modal.appendChild(iframe);
-      document.body.appendChild(overlay);
-      document.body.appendChild(modal);
-    }
-  
-    // 确保菜单始终存在
-    async function ensureMenu() {
-      if (!document.getElementById('menuButton')) {
-        await initMenu();
-      }
-      requestAnimationFrame(ensureMenu);
-    }
-  
-    // 启动
-    ensureMenu();
-  })();
+  // 确保页面加载完成后再创建按钮
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ensureHomeButton);
+  } else {
+    ensureHomeButton();
+  }
+})();
