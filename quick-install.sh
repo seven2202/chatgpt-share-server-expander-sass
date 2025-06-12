@@ -151,7 +151,7 @@ ${DOMAIN1:+${DOMAIN1} {
   			header_up REMOTE-HOST {remote_host}
   		}
   	}    
-    handle /public-api/* {
+    handle /client-api/* {
         reverse_proxy localhost:9301 {
             header_up Host {host}
             header_up X-Real-IP {remote_host}
