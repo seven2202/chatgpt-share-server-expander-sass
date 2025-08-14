@@ -16,6 +16,8 @@
 #### 内容审核
 #### 代理功能，代理可以自己用域名反代主站，可以用代理账号密码登录sass后台进行套餐、公告信息维护和代理推广用户数据查看，支持自定义logo、站点名称。
 更多功能以演示站为主
+### 部署文档
+https://tcnegz9bslrt.feishu.cn/wiki/DmyJwxDqxiPrEKknA00cpX0Wnlb
 ## 前台界面截图
 ![image](https://github.com/user-attachments/assets/5742a907-3014-4edf-84ae-fb58a6d29629)
 
