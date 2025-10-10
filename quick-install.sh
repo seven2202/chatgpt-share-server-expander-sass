@@ -172,7 +172,7 @@ ${DOMAIN1:+${DOMAIN1} {
    }
 reverse_proxy localhost:9300
 }
-
+}
 # Claude 配置
 ${DOMAIN2:+${DOMAIN2} {
     reverse_proxy localhost:9302 
@@ -196,13 +196,6 @@ git clone --depth=1 https://github.com/seven2202/chatgpt-share-server-expander-s
 ## 进入目录
 cd chatgpt-share-server-expander-sass
 echo "➤ 6. 开始配置 docker-compose.yml 信息..."
-
-# 提示用户输入 CHATPROXY 和 OAUTH_URL
-echo -n "请输入接入 gpt 的网关地址，要带https (如：https://a.baidu.com)："
-read CHATPROXY < /dev/tty
-
-# 替换 docker-compose.yml 文件中的 CHATPROXY 和 OAUTH_URL
-sed -i "s|CHATPROXY: .*|CHATPROXY: \"$CHATPROXY\"|g" docker-compose.yml
 
 # 生成一个 UUID 并写入到配置文件中
 UUID=$(uuidgen)
