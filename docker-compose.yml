@@ -30,7 +30,7 @@ services:
       - 9300:8001
     environment:
       TZ: Asia/Shanghai
-      CHATPROXY: "https://demo.xyhelper-gateway.com"
+      CHATPROXY: "http://expander-gateway-server:3000"
       AUTHKEY: "xyhelper"
       AUDIT_LIMIT_URL: "http://chatgpt-share-server-expander:8888/client-api/auditLimit"
       OAUTH_URL: "http://chatgpt-share-server-expander:8888/client-api/openai/oauth"
@@ -62,7 +62,14 @@ services:
       - ./data/chatgpt-share-server-expander/data:/app/data
       - /etc:/host/etc:ro
       - /sys:/host/sys:ro
-
+  expander-gateway-server:
+    image: seven222/expander-gateway-server:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./config.yaml:/app/config.yaml
+    environment:
+      - TZ=Asia/Shanghai
   dddd-share-server:
     image: lyy0709/dddd-share-server:dev
     restart: always
