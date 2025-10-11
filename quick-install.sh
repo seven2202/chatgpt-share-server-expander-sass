@@ -142,37 +142,37 @@ ${DOMAIN1:+${DOMAIN1} {
             header_up Host {host}
             header_up X-Real-IP {remote_host}
             header_up REMOTE-HOST {remote_host}
-            }
         }
+    }
     handle /api/* {
-  		reverse_proxy localhost:9301 {
-  			header_up Host {host}
-  			header_up X-Real-IP {remote_host}
-  			header_up REMOTE-HOST {remote_host}
-  		}
-  	}    
+        reverse_proxy localhost:9301 {
+            header_up Host {host}
+            header_up X-Real-IP {remote_host}
+            header_up REMOTE-HOST {remote_host}
+        }
+    }    
     handle /client-api/* {
         reverse_proxy localhost:9301 {
             header_up Host {host}
             header_up X-Real-IP {remote_host}
             header_up REMOTE-HOST {remote_host}
-            }
         }
-   handle /app/* {
+    }
+    handle /app/* {
         reverse_proxy localhost:9301
-        }
-   redir /expander /expander/
-   handle /expander/* {
+    }
+    redir /expander /expander/
+    handle /expander/* {
         reverse_proxy localhost:9301
-        }
-   redir /list /list/
-   handle /list/* {
-       rewrite *  /app/index.html
-       reverse_proxy localhost:9301
-   }
-reverse_proxy localhost:9300
-}
-}
+    }
+    redir /list /list/
+    handle /list/* {
+        rewrite *  /app/index.html
+        reverse_proxy localhost:9301
+    }
+    reverse_proxy localhost:9300
+}}
+
 # Claude 配置
 ${DOMAIN2:+${DOMAIN2} {
     reverse_proxy localhost:9302 
