@@ -64,6 +64,7 @@ services:
       - /sys:/host/sys:ro
   expander-gateway-server:
     image: seven222/expander-gateway-server:latest
+    restart: always
     ports:
       - "3000:3000"
     volumes:
