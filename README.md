@@ -60,8 +60,8 @@ https://tcnegz9bslrt.feishu.cn/wiki/DmyJwxDqxiPrEKknA00cpX0Wnlb
 ## 后台（懒得截了）
 
 ## 演示站
-#### sass主站前台:sass.fllai.cn
-#### sass后台:sass.fllai.cn/expander
+#### sass主站前台:sas.fllai.cn
+#### sass后台:sas.fllai.cn/expander
 #### 代理站前台1:tenant.fllai.cn
 #### 代理站前台2:tenant2.fllai.cn
 #### 管理员admin/123456
@@ -86,7 +86,7 @@ curl -sSfL https://raw.githubusercontent.com/seven2202/chatgpt-share-server-expa
 
 ### 授权流程
 本授权采用离线方式
-访问自己的gpt域名/client-api/license，例如测试站：https://sass.fllai.cn/client-api/license
+访问自己的gpt域名/client-api/license，例如测试站：https://sas.fllai.cn/client-api/license
 ![image](https://github.com/user-attachments/assets/8aa3d3e2-2c2a-4bf9-ab87-85140d44bfa3)
 
 复制唯一hash值，发送给管理员，管理员将根据你需要的权限和时长生成一个授权码。
